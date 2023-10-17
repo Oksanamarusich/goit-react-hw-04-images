@@ -1,48 +1,48 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { BiSearch } from "react-icons/bi";
 import { Search, Button, Input } from "./Searchbar.styled";
 import toast from 'react-hot-toast';
 
-export class Searchbar extends Component {
-    state = {
-        value: '',
-    }
+export const  Searchbar =()=> {
+    const [value, setValue] = useState('');
 
-    handlerChange = evt => {
-        this.setState({ value: evt.target.value });
-       
+   
+
+   const handlerChange = evt => {
+        
+       setValue(evt.target.value);
     }
     
-    handlerSubmit = evt => {
+   const handlerSubmit = evt => {
         evt.preventDefault();
-         if (this.state.value.trim() === '') {
+         if (value.trim() === '') {
     return  toast.success('Please enter a search word.', {position:'top-right'});
         };
 
-        this.props.handelSearch(this.state.value);
+        //handelSearch(value);
          
-        this.reset();
+         reset();
 }
     
-    reset = () => {
-        this.setState({ value: '' });
+  const  reset = () => {
+        
+      setValue('');
     }
     
 
-render() {
         return (
-           <Search  onSubmit= {this.handlerSubmit}>
+           <Search  onSubmit= {handlerSubmit}>
             <Button type="submit"><BiSearch size = "18px"/></Button>
 
             <Input
                 type="text"
                     placeholder="Search images and photos"
-                    value={this.state.value} 
-                onChange = {this.handlerChange}
+                    value={value} 
+                onChange = {handlerChange}
     />
   </Search>
         )
     }
-}
+
 
 

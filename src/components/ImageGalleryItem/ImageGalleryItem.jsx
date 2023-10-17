@@ -1,35 +1,30 @@
 import Modal from 'react-modal';
-import { Component } from 'react';
+import { useState } from 'react';
 import "../Modal/Modal.css";
 import { GalleryItem,  GalleryImg } from "./ImageGalleryItem.styled";
 
 Modal.setAppElement('#root');
 
-export class ImageGalleryItem extends Component {
-      state = {
-            isModalOpen: false,
+export const ImageGalleryItem = ({ id, picture, picturemodal, alt }) => {
+   const [isModalOpen, setIsModalOpen] = useState(false)
+    
+  const  openModal = () => {
+        setIsModalOpen(true);
       };
 
-      openModal = () => {
-            this.setState({ isModalOpen: true });
+    const  closeModal = () => {
+          setIsModalOpen(false);  
       };
 
-      closeModal = () => {
-            this.setState({ isModalOpen: false });
-      };
-
-      render() {
-            const { isModalOpen } = this.state;
-            const { id, picture, picturemodal, alt } = this.props;
             return (<GalleryItem >
                   <li key = {id}>
-                        < GalleryImg src={picture} alt={alt} onClick={this.openModal} />
+                        < GalleryImg src={picture} alt={alt} onClick={openModal} />
                   </li>
 
                   <Modal
                         
                         isOpen={isModalOpen}
-                        onRequestClose={this.closeModal}
+                        onRequestClose={closeModal}
                         contentLabel="Example Modal"
                          className="Modal"
                          overlayClassName="Overlay"
@@ -41,7 +36,7 @@ export class ImageGalleryItem extends Component {
                   </Modal>
             </GalleryItem>)
       }
-}
+
 
 
 
