@@ -17,22 +17,8 @@ export const App = () => {
   const [error, setError] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [page, setPage] = useState(1);
-  
-  const handelSearch = (searchText) => {
-    setSearchText(searchText);
-    setPage(1);
-    setImages([]);
-    
-   
-  }
 
-  const handlerLoadMore = ({ page }) => {
-    setPage = (prevState=>prevState + 1)
-  
-   
-  }
-
-  useEffect(() => {
+   useEffect(() => {
     if (searchText === '') {
       return;
     }
@@ -41,8 +27,8 @@ export const App = () => {
       setError(false);
       try {
         const galleryImages = await fetchImages(searchText, page);
-        // this.setState(prevState => ({images: [...prevState.images, ...galleryImages.hits]}));
-        setImages(prevState => [...prevState.images, ...galleryImages.hits])
+        
+        setImages(prevImages => [...prevImages, ...galleryImages.hits])
         
         if (!galleryImages.hits.length) {
           toast.success("No more pictures. Please, try something else.", { position: 'top-right' })
@@ -56,11 +42,23 @@ export const App = () => {
         setLoading(false);
       }
     }
+
     getImages();
+
   }, [searchText, page]);
- 
   
-  return (
+  const handelSearch = (searchText) => {
+    setSearchText(searchText);
+    setPage(1);
+    setImages([]);
+  }
+
+  const handlerLoadMore = ({ page }) => {
+    setPage(prevPage => prevPage + 1);
+  }
+
+  
+return (
     <Layout>
         <Searchbar  handelSearch={handelSearch} />
         
