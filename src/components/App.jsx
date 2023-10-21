@@ -10,6 +10,7 @@ import { fetchImages } from 'components/services/api';
 import { Layout } from "./Layout";
 import { ErrorMessage } from 'components/ErrorMessage.styled';
 
+let galleryImages;
 
 export const App = () => {
   const [images, setImages] = useState([]);
@@ -17,6 +18,7 @@ export const App = () => {
   const [error, setError] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [page, setPage] = useState(1);
+ 
 
    useEffect(() => {
     if (searchText === '') {
@@ -26,7 +28,7 @@ export const App = () => {
       setLoading(true);
       setError(false);
       try {
-        const galleryImages = await fetchImages(searchText, page);
+         galleryImages = await fetchImages(searchText, page);
         
         setImages(prevImages => [...prevImages, ...galleryImages.hits])
         
@@ -75,7 +77,7 @@ return (
         
      {images.length > 0 && <ImageGallery gallery={images} />} 
         
-     {images.length > 0 && <ButtonLoadMore  onClick = {handlerLoadMore} />}
+     {images.length > 0 && images.length < galleryImages.totalHits && <ButtonLoadMore  onClick = {handlerLoadMore} />}
       
         
          <Toaster /> 
