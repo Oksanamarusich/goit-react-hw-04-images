@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import toast, { Toaster } from 'react-hot-toast';
-import { RotatingLines } from 'react-loader-spinner';
+import { Loader } from './Loader/Loader.js';
 
 import { Searchbar } from "./Searchbar/Searchbar";
 import { ImageGallery } from "./ImageGallery/ImageGallery";
@@ -64,13 +64,7 @@ return (
     <Layout>
         <Searchbar  handelSearch={handelSearch} />
         
-     {loading && <RotatingLines
-           strokeColor="grey"
-           strokeWidth="5"
-           animationDuration="0.75"
-           width="96"
-           visible={true}
-          />}
+     {loading && <Loader />}
      {error && (
           <ErrorMessage>Whoops! Error! Please reload this page!</ErrorMessage>
         )}            
